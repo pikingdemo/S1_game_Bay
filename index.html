@@ -1,0 +1,223 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>打老師遊戲</title>
+        <link rel="icon" sizes="8*8" href="teacher.png">
+        <meta charset="utf-8">
+        <meta content="Bay">
+    </head>
+    <body align="center" style="background-image: url('./123.jpeg');background-repeat:no-repeat;background-size:100% 315%;">
+         <div style="background-color:rgba(128, 100, 24, 0.973) ;">
+            <a style="font-size: 40px;" title="1.打到目標得分2.非目標直接失敗"> 遊戲說明</a><br>
+            <table border="3px" align="center" >
+                <tr>
+                    <th>人物樣子</th>
+                    <td><img style="width:50px; height: 50px;" src="teacher.png"></td>
+                    <td><img width="50px" src="reading-book.png"></td>
+                </tr>
+                <tr>
+                    <th>擊殺目標</th>
+                    <td>o</td>
+                    <td>x</td>
+                </tr>
+            </table>
+            <h2>遊戲難度</h2>
+            <form id="whichlevel">
+                <label style="color:rgb(93, 194, 98);"><input type="radio" name="level" value="easy">簡單</label>
+                <label style="color: rgba(151, 151, 246, 0.918);"><input type="radio" name="level" value="normal" checked>一般</label>
+                <label style="color: rgba(255, 122, 122, 0.752);"><input type="radio" name="level" value="hard">困難</label>
+            </form>
+            <button onclick="start()" style="background-color: rgb(70, 70, 70);color:antiquewhite;border-color: antiquewhite;"><a style="font-size: 20px;">開始遊戲</a></button><br>
+            <p style="font-size:5px ;" ></p>
+            <button onclick="refresh()" style="background-color: rgb(70, 70, 70);color: antiquewhite;border-color:antiquewhite;" ><img width="20px" src="reload.png"><a style="font-size: 15px;">重新一局</button><br>
+            <a id="time" style="font-size: 26px; color: antiquewhite;" >時間:60</a><br>
+            <a id="score" style="font-size: 25px; color: antiquewhite;">分數:0</a>           
+        </div>
+        <div style="cursor: url('./chalk.ico'),auto;position: absolute;height: 60%;width: 100%;">
+            <img id="demo1" >
+            <img id="demo2" >
+            <img id="demo3" >
+            <img id="demo4" >
+            <map name="workmap1">
+                <area shape="circle" coords="0,0,100" onclick="hit1()">
+            </map>
+            <map name="workmap2">
+                <area shape="circle" coords="0,0,100" onclick="hit2()">
+            </map>
+            <map name="workmap3">
+                <area shape="circle" coords="0,0,100" onclick="hit3()">
+            </map>
+            <map name="workmap4">
+                <area shape="circle" coords="0,0,100" onclick="hit4()">
+            </map>
+            <map name="workmap5">
+                <area shape="circle" coords="0,0,100" onclick="hit5()">
+            </map>
+        </div>
+        <script>
+            function getRandom(min,max)
+            {
+                return Math.floor(Math.random()*(max-min+1))+min;
+            };
+            var conut=60;
+            var click = false;
+            function start()
+            {   
+                var backgroundaudio = new Audio(./Escapism - Yung Logos.mp3)
+                backgroundaudio.play();
+                if (click==false)
+                {
+                    var timer=null;
+                    timer=setInterval(function ()
+                    {
+                        if(conut>0)
+                        {
+                            conut=conut-1;
+                            document.getElementById("time").innerHTML="時間："+ conut;
+                            var randomimg1=getRandom(0,1);
+                            var randomimg2=getRandom(0,1);
+                            var randomimg3=getRandom(0,1);
+                            var randomimg4=getRandom(0,1);
+                            var img1="none";
+                            var img2="none";
+                            var img3="none";
+                            var img4="none";
+                            var map1="none";
+                            var map2="none";
+                            var map3="none";
+                            var map4="none";
+                            if (randomimg1==0)
+                            {
+                                img1="teacher.png";
+                                map1='#workmap1';
+                            }
+                            else
+                            {
+                                img1="reading-book.png";
+                                map1='#workmap5';                            
+                            }
+                            if (randomimg2==0)
+                            {
+                                img2="teacher.png";
+                                map2='#workmap2';
+                            }
+                            else
+                            {
+                                img2="reading-book.png"; 
+                                map2='#workmap5';   
+                            }
+                            if (randomimg3==0)
+                            {
+                                img3="teacher.png";
+                                map3='#workmap3';
+                            }
+                            else
+                            {
+                                img3="reading-book.png";    
+                                map3='#workmap5';
+                            }
+                            if (randomimg4==0)
+                            {
+                                img4="teacher.png";
+                                map4='#workmap4';
+                            }
+                            else
+                            {
+                                img4="reading-book.png";    
+                                map4='#workmap5';
+                            }
+                                document.getElementById('demo1').src=img1;
+                                document.getElementById('demo1').useMap=map1;
+                                document.getElementById('demo2').src=img2;
+                                document.getElementById('demo2').useMap=map2;
+                                document.getElementById('demo3').src=img3;
+                                document.getElementById('demo3').useMap=map3;
+                                document.getElementById('demo4').src=img4;
+                                document.getElementById('demo4').useMap=map4;
+                            var lv=document.getElementById("whichlevel").elements["level"].value;
+                            if(lv=='hard')
+                            {
+                                document.getElementById("demo1").style="width:40px;height:40px;margin:"+Math.ceil(Math.random()*15)+"% "+Math.ceil(Math.random()*40)+ "% "+"auto "+Math.ceil(Math.random()*40) + "% "
+                                document.getElementById("demo2").style="width:40px;height:40px;margin:"+Math.ceil(Math.random()*15)+"% "+Math.ceil(Math.random()*40)+ "% "+"auto "+Math.ceil(Math.random()*40) + "% "
+                                document.getElementById("demo3").style="width:40px;height:40px;margin:"+Math.ceil(Math.random()*15)+"% "+Math.ceil(Math.random()*40)+ "% "+"auto "+Math.ceil(Math.random()*40) + "% "
+                                document.getElementById("demo4").style="width:40px;height:40px;margin:"+Math.ceil(Math.random()*15)+"% "+Math.ceil(Math.random()*40)+ "% "+"auto "+Math.ceil(Math.random()*40) + "% "
+                            }
+                            else if(lv=='normal')
+                            {
+                                document.getElementById("demo1").style="width:40px;height:40px;margin:"+Math.ceil(Math.random()*15)+"% "+Math.ceil(Math.random()*40)+ "% "+"auto "+Math.ceil(Math.random()*40) + "% "
+                                document.getElementById("demo3").style="width:40px;height:40px;margin:"+Math.ceil(Math.random()*15)+"% "+Math.ceil(Math.random()*40)+ "% "+"auto "+Math.ceil(Math.random()*40) + "% "
+                                document.getElementById("demo4").style="width:40px;height:40px;margin:"+Math.ceil(Math.random()*15)+"% "+Math.ceil(Math.random()*40)+ "% "+"auto "+Math.ceil(Math.random()*40) + "% "
+                                document.getElementById("demo2").style="display:none"                
+                            }
+                            else if(lv=='easy')
+                            {
+                                document.getElementById("demo1").style="width:40px;height:40px;margin:"+Math.ceil(Math.random()*15)+"% "+Math.ceil(Math.random()*40)+ "% "+"auto "+Math.ceil(Math.random()*40) + "% "
+                                document.getElementById("demo4").style="width:40px;height:40px;margin:"+Math.ceil(Math.random()*15)+"% "+Math.ceil(Math.random()*40)+ "% "+"auto "+Math.ceil(Math.random()*40) + "% "
+                                document.getElementById("demo2").style="display:none"
+                                document.getElementById("demo3").style="display:none"              
+                            }
+                            }
+                            else
+                            {
+                                document.getElementById("demo1").style="display:none"
+                                document.getElementById("demo2").style="display:none"
+                                document.getElementById("demo3").style="display:none"
+                                document.getElementById("demo4").style="display:none"
+                                document.getElementById("time").innerHTML="GAME OVER"
+                                document.getElementById("time").style="font-size: 50px; color: rgb(107, 0, 0);"
+                            }
+                        },1000);
+                    }
+                click=true;
+            }
+            var n = 0;
+            function addscore()
+            {
+                n=n+1;
+                document.getElementById("score").innerHTML= "分數:"+ n;
+            }
+            function hit1()
+            {
+                document.getElementById("demo1").src="angry.png";
+                document.getElementById("demo1").useMap="";
+                addscore();
+                var audio = new Audio("./tumbling1.mp3");
+                audio.play();
+            }
+            function hit2()
+            {
+                document.getElementById("demo2").src="angry.png";
+                document.getElementById("demo2").useMap="";
+                addscore();
+                var audio = new Audio("./tumbling1.mp3");
+                audio.play();
+            }
+            function hit3()
+            {
+                document.getElementById("demo3").src="angry.png";
+                document.getElementById("demo3").useMap="";
+                addscore();
+                var audio = new Audio("./tumbling1.mp3");
+                audio.play();
+            }
+            function hit4()
+            {
+                document.getElementById("demo4").src="angry.png";
+                document.getElementById("demo4").useMap="";
+                addscore();
+                var audio = new Audio("./tumbling1.mp3");
+                audio.play();
+            }
+            function hit5()
+            {
+                start(conut=0);
+                var audio = new Audio("./bomb.mp3");
+                audio.play();
+            }
+            function refresh()
+            {
+                window.location.reload();
+            }
+        </script>
+    </body>
+</html>
